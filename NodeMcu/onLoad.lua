@@ -1,6 +1,6 @@
 print(" Hello.  I am the ESP8266 board and I am ready.")
-WIFI_SSID = "YOUR_SSID"
-WIFI_PASS = "YOUR WIFI PASSWORD"
+WIFI_SSID = "You just lost the game"
+WIFI_PASS = "thunder3266"
 ip = wifi.sta.getip()
 
 wifi.setmode(wifi.STATION)

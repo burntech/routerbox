@@ -1,4 +1,7 @@
 myMsg = "helloFromESP8266"
 myTopic = "mark/button"
-myMQTT = mqtt.Client('esp', 12000)
-myMQTT:connect("YOUR_BROKER_IP", 1883, 0, function(conn) print("connected") end)
+myMQTT = mqtt.Client('esp1', 12000)
+myMQTT:connect("192.168.1.20", 1883, 0, function(conn) 
+    print("connected") 
+    dofile("pulsePin1.lua")
+end)
