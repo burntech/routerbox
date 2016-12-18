@@ -1,0 +1,86 @@
+<html>
+<head>
+	<title>RouterPi</title>
+	<script src="jquery-3.1.1.min.js"></script>
+</head>
+<body>
+	<script>
+		// handles the click event, sends the query
+		function getOutput() {
+		   $.ajax({
+			  url:'domqtt.php?topic='+document.getElementById('topicTxt').value+'&message='+document.getElementById('messageTxt').value,
+			  complete: function (response) {
+				  $('#output').html(response.responseText);
+			  },
+			  error: function () {
+				  $('#output').html('Bummer: there was an error!');
+			  }
+		  });
+		  return false;
+		}
+		function publish(topic, message){
+			$.ajax({
+			  url:'domqtt.php?topic='+topic+'&message='+message,
+			  complete: function (response) {
+				  $('#output').html(response.responseText);
+			  },
+			  error: function () {
+				  $('#output').html('Bummer: there was an error!');
+			  }
+		  });	
+		}	
+		function tellPin(val) {
+		   $.ajax({
+			  url:'domqtt.php?topic=mark/button&message='+val,
+			  complete: function (response) {
+				  $('#output').html(response.responseText);
+			  },
+			  error: function () {
+				  $('#output').html('Bummer: there was an error!');
+			  }
+		  });
+		  return false;
+		}
+	</script>
+	RouterPi MQTT Interface.
+	<br/>
+	Topic: <input id="topicTxt" type="text" maxlength="128"/>
+	<br/>
+	Message: <input id="messageTxt" type="text" maxlength="128"/>
+	<br/>
+	<a href="#" onclick="return getOutput();"> Publish </a>
+	<br/>
+	<div id="output"></div>
+	
+	<button onclick="return tellPin('1');"> 1 on </button>
+	<button onclick="return tellPin('!1');"> 1 off </button>
+	<br/>
+	<button onclick="return tellPin('2');"> 2 on </button>
+	<button onclick="return tellPin('!2');"> 2 off </button>
+	<br/>
+	<button onclick="return tellPin('3');"> 3 on </button>
+	<button onclick="return tellPin('!3');"> 3 off </button>
+	<br/>
+	<button onclick="return tellPin('4');"> 4 on </button>
+	<button onclick="return tellPin('!4');"> 4 off </button>
+	<br/>
+	<button onclick="return tellPin('5');"> 5 on </button>
+	<button onclick="return tellPin('!5');"> 5 off </button>
+	<br/>
+	<button onclick="return tellPin('6');"> 6 on </button>
+	<button onclick="return tellPin('!6');"> 6 off </button>
+	<br/>
+	<button onclick="return tellPin('7');"> 7 on </button>
+	<button onclick="return tellPin('!7');"> 7 off </button>
+	<br/>
+	<button onclick="return tellPin('8');"> 8 on </button>
+	<button onclick="return tellPin('!8');"> 8 off </button>
+	<br/>
+	<button onclick="return tellPin('9');"> 9 on </button>
+	<button onclick="return tellPin('!9');"> 9 off </button>
+	<br/>
+	<button onclick="return tellPin('10');"> 10 on </button>
+	<button onclick="return tellPin('!10');"> 10 off </button>
+
+</body>
+</html>
