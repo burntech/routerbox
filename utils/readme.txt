@@ -1,0 +1,1 @@
+These are libs I found useful, but they have their own repo's on github.  I only incl them here for convenience.
