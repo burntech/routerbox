@@ -1,7 +1,56 @@
-myMQTT:subscribe("mark/button", 0, function(conn) print("subscribe success") end)
+myMQTT:subscribe("mark/button", 0, function(conn) print("button subscribe success") end)
+myMQTT:subscribe("mark/lights", 0, function(conn) print("lights subscribe success") end)
+myMQTT:subscribe("wiimote/buttonPress", 0, function(conn) print("wiimote button subscribe success") end)
+myMQTT:subscribe("wiimote/motion", 0, function(conn) print("wiimote motion subscribe success") end)
+
 myMQTT:on("message", function(client, topic, data) 
   print(topic) 
   print(data)
+  if(topic == "wiimote/buttonPress")then
+    tmr.stop(1)
+    if(data == "a")then
+        buffer = ws2812.newBuffer(30, 3)
+        buffer:fill(255, 0, 0)
+        ws2812.write(buffer)
+    end
+    if(data == "b")then
+        buffer = ws2812.newBuffer(30, 3)
+        buffer:fill(0, 255, 0)
+        ws2812.write(buffer)
+    end
+    if(data == "1")then
+        buffer = ws2812.newBuffer(30, 3)
+        buffer:fill(0, 0, 255)
+        ws2812.write(buffer)
+    end
+    if(data == "2")then
+        buffer = ws2812.newBuffer(30, 3)
+        buffer:fill(255, 0, 255)
+        ws2812.write(buffer)
+    end
+    if(data == "+")then
+         dofile("doLights.lua")
+    end
+    
+  end
+  if(topic == "wiimote/motion")then
+    print(data)
+    t = cjson.decode(data)
+    for k,v in pairs(t) do print(k,v) end
+    red = t["red"]
+    green = t["green"]
+    blue = t["blue"]
+    buffer = ws2812.newBuffer(30, 3)
+    buffer:fill(green, red, blue)
+    ws2812.write(buffer)
+  end
+  if(topic == "mark/lights")then
+    t = cjson.decode(data)
+    for k,v in pairs(t) do print(k,v) end
+    red = t["red"]
+    green = t["green"]
+    blue = t["blue"]
+  end
   if(data == "10") then
     print(string.format("Turn 10 on please."))
     gpio.mode(12, gpio.OUTPUT)

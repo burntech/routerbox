@@ -1,0 +1,36 @@
+https://nodemcu.readthedocs.io/en/master/
+
+rPi mqtt:
+//get all mosquitto processes
+ps -ef | grep mosquitto
+sudo kill 12345
+mosquitto
+
+//topics are arbitrary strings in a hierarchy like home/livingroom/temperature
+
+//subscribe to the hass/status topic
+mosquitto_sub -d -t hass/status
+
+//publish an mqtt message to the hass/status topic
+mosquitto_pub -d -t hass/status -m "hello world"
+
+Rpi3 ip address = 192.168.1.20:1883
+
+homeassistant:
+to open home assisstant:
+cmdPrompt> py -m homeassistant --open
+
+//path to configuration.yaml : 
+C:\Users\mromano\AppData\Roaming\.homeassistant
+
+in home assisstant:
+under developer tools, left icon is services
+drop down domain to mqtt
+service is publish
+service data:
+{
+"topic":"hass/status",
+"payload":"Boom!  Nailed it."
+}
+
+
